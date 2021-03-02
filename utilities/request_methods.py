@@ -1,6 +1,7 @@
 from flask import Flask, jsonify, request
 from flask_restful import Resource, Api
-from errorhandler import ErrorHandler
+from utilities.errorhandler import ErrorHandler
+from utilities.keys import *
 
 eh = ErrorHandler()
 
@@ -14,5 +15,11 @@ class MainRequest(Resource):
         error, res = eh.throws(req)
         if error:
             return res
-            
+
         return jsonify("Hello there!")
+
+# WARNING: THIS IS JUST FOR TESTING PURPOSES. REMOVE THIS IN PRODUCTION!!!
+class APIKey(Resource):
+    def get(self):
+        key = generateNewAPIKey()
+        return jsonify(key)
